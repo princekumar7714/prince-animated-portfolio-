@@ -121,3 +121,18 @@ body {
     font-size: 40px;
   }
 }
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #0b080c;
+}
+
+.loading-screen h2 {
+  color: var(--accentColor);
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
