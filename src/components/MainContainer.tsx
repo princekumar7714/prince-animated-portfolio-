@@ -1,4 +1,4 @@
-import { lazy, PropsWithChildren, Suspense, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import About from "./About";
 import Career from "./Career";
 import Contact from "./Contact";
@@ -8,39 +8,20 @@ import Navbar from "./Navbar";
 import SocialIcons from "./SocialIcons";
 import WhatIDo from "./WhatIDo";
 import Work from "./Work";
-import setSplitText from "./utils/splitText";
-
-const TechStack = lazy(() => import("./TechStack"));
+import TechStack from "./TechStack";
 
 const MainContainer = ({ children }: PropsWithChildren) => {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(false);
-  const [isClient, setIsClient] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsClient(true);
-    setIsDesktopView(window.innerWidth > 1024);
-    
-    const resizeHandler = () => {
-      setSplitText();
+    const handleResize = () => {
       setIsDesktopView(window.innerWidth > 1024);
     };
     
-    resizeHandler();
-    window.addEventListener("resize", resizeHandler);
-    return () => {
-      window.removeEventListener("resize", resizeHandler);
-    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  if (!isClient) {
-    return (
-      <div className="container-main">
-        <div className="loading-screen">
-          <h2>Loading Portfolio...</h2>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="container-main">
@@ -56,11 +37,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <WhatIDo />
             <Career />
             <Work />
-            {isDesktopView && (
-              <Suspense fallback={<div>Loading....</div>}>
-                <TechStack />
-              </Suspense>
-            )}
+            {isDesktopView && <TechStack />}
             <Contact />
           </div>
         </div>
