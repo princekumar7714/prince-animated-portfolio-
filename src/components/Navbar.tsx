@@ -2,26 +2,11 @@ import { useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
-import { ScrollSmoother } from "gsap-trial/ScrollSmoother";
 import "./styles/Navbar.css";
-
-gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-export let smoother: ScrollSmoother;
 
 const Navbar = () => {
   useEffect(() => {
-    smoother = ScrollSmoother.create({
-      wrapper: "#smooth-wrapper",
-      content: "#smooth-content",
-      smooth: 1.7,
-      speed: 1.7,
-      effects: true,
-      autoResize: true,
-      ignoreMobileResize: true,
-    });
-
-    smoother.scrollTop(0);
-    smoother.paused(true);
+    gsap.registerPlugin(ScrollTrigger);
 
     let links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
@@ -31,26 +16,31 @@ const Navbar = () => {
           e.preventDefault();
           let elem = e.currentTarget as HTMLAnchorElement;
           let section = elem.getAttribute("data-href");
-          smoother.scrollTo(section, true, "top top");
+          if (section) {
+            const target = document.querySelector(section);
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth" });
+            }
+          }
         }
       });
     });
     window.addEventListener("resize", () => {
-      ScrollSmoother.refresh(true);
+      ScrollTrigger.refresh();
     });
   }, []);
   return (
     <>
       <div className="header">
         <a href="/#" className="navbar-title" data-cursor="disable">
-          Logo
+          Prince
         </a>
         <a
-          href="mailto:example@mail.com"
+          href="mailto:princerajpit5868@gmail.com"
           className="navbar-connect"
           data-cursor="disable"
         >
-          example@mail.com
+          princerajpit5868@gmail.com
         </a>
         <ul>
           <li>

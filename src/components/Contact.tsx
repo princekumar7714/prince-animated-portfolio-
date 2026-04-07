@@ -1,4 +1,4 @@
-import { MdArrowOutward, MdCopyright } from "react-icons/md";
+import { MdCopyright, MdDownload } from "react-icons/md";
 import "./styles/Contact.css";
 
 const Contact = () => {
@@ -10,55 +10,53 @@ const Contact = () => {
           <div className="contact-box">
             <h4>Email</h4>
             <p>
-              <a href="mailto:example@mail.com" data-cursor="disable">
-                example@mail.com
+              <a href="mailto:princerajpit5868@gmail.com" data-cursor="disable">
+                princerajpit5868@gmail.com
               </a>
             </p>
             <h4>Phone</h4>
             <p>
-              <a href="tel:+9199999999" data-cursor="disable">
-                +91 99999 99999
+              <a href="tel:+919084486898" data-cursor="disable">
+                +91 90844 86898
               </a>
             </p>
+            <h4>Location</h4>
+            <p>Baraut, Uttar Pradesh, 250611</p>
+          </div>
+          <div className="contact-box">
+            <h4>Resume</h4>
+            <a
+              href="/resume/Prince_Kumar_CV_Updated.pdf"
+              download="Prince_Kumar_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-resume"
+            >
+              <MdDownload /> Download Resume
+            </a>
           </div>
           <div className="contact-box">
             <h4>Social</h4>
             <a
-              href="https://github.com"
+              href="https://github.com/princeKumar7714"
               target="_blank"
-              data-cursor="disable"
+              rel="noopener noreferrer"
               className="contact-social"
             >
-              Github <MdArrowOutward />
+              Github
             </a>
             <a
-              href="https://www.linkedin.com"
+              href="https://www.linkedin.com/in/prince-kumar-23a350301/"
               target="_blank"
-              data-cursor="disable"
+              rel="noopener noreferrer"
               className="contact-social"
             >
-              Linkedin <MdArrowOutward />
-            </a>
-            <a
-              href="https://x.com"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Twitter <MdArrowOutward />
-            </a>
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Instagram <MdArrowOutward />
+              Linkedin
             </a>
           </div>
           <div className="contact-box">
             <h2>
-              Designed and Developed <br /> by <span>Moncy Yohannan</span>
+              Designed and Developed <br /> by <span>Prince Kumar</span>
             </h2>
             <h5>
               <MdCopyright /> 2024

@@ -1,75 +1,147 @@
 import "./styles/Work.css";
 import WorkImage from "./WorkImage";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(useGSAP);
+import { useState, useEffect } from "react";
 
 const Work = () => {
-  useGSAP(() => {
-  let translateX: number = 0;
-
-  function setTranslateX() {
-    const box = document.getElementsByClassName("work-box");
-    const rectLeft = document
-      .querySelector(".work-container")!
-      .getBoundingClientRect().left;
-    const rect = box[0].getBoundingClientRect();
-    const parentWidth = box[0].parentElement!.getBoundingClientRect().width;
-    let padding: number =
-      parseInt(window.getComputedStyle(box[0]).padding) / 2;
-    translateX = rect.width * box.length - (rectLeft + parentWidth) + padding;
-  }
-
-  setTranslateX();
-
-  let timeline = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".work-section",
-      start: "top top",
-      end: `+=${translateX}`, // Use actual scroll width
-      scrub: true,
-      pin: true,
-      id: "work",
+  const [currentProject, setCurrentProject] = useState(0);
+  
+  const projects = [
+    {
+      id: 1,
+      title: "Click Cart E-Commerce",
+      category: "Full Stack Application",
+      tools: "React, Node.js, MongoDB, Stripe API",
+      image: "/images/mongo.webp",
+      link: "https://click-cart-frontend-vert.vercel.app/"
     },
-  });
+    {
+      id: 2,
+      title: "Bookstore Management",
+      category: "Full Stack Application",
+      tools: "Node.js, Express.js, MongoDB, EJS, CRUD Operations",
+      image: "/images/express.webp",
+      link: "https://bookstoreappmern.netlify.app/"
+    },
+    {
+      id: 3,
+      title: "REST API Project",
+      category: "Backend Service",
+      tools: "Node.js, Express.js, MongoDB, JWT Authentication",
+      image: "/images/node.webp",
+      link: "https://restapi-project.netlify.app/"
+    },
+    {
+      id: 4,
+      title: "Fascinating Dango",
+      category: "Web Application",
+      tools: "React, Modern UI, Responsive Design",
+      image: "/images/react.webp",
+      link: "https://fascinating-dango-3bfb52.netlify.app/"
+    },
+    {
+      id: 5,
+      title: "Power Health Gym",
+      category: "Fitness Website",
+      tools: "React, Tailwind CSS, WhatsApp Integration",
+      image: "/images/javascript.webp",
+      link: "https://github.com/princeKumar7714/power-health-gym"
+    },
+    {
+      id: 6,
+      title: "Geetashakti Cancer Care",
+      category: "Non-Profit Foundation",
+      tools: "React, Modern UI, Community Services",
+      image: "https://geetashakti.org/favicon.png",
+      link: "https://geetashakti.org"
+    }
+  ];
 
-  timeline.to(".work-flex", {
-    x: -translateX,
-    ease: "none",
-  });
-
-  // Clean up (optional, good practice)
-  return () => {
-    timeline.kill();
-    ScrollTrigger.getById("work")?.kill();
+  const nextProject = () => {
+    setCurrentProject((prev) => Math.min(prev + 2, projects.length - 2));
   };
-}, []);
+
+  const prevProject = () => {
+    setCurrentProject((prev) => Math.max(prev - 2, 0));
+  };
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        nextProject();
+      } else if (e.key === 'ArrowLeft') {
+        prevProject();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, []);
+
   return (
     <div className="work-section" id="work">
       <div className="work-container section-container">
         <h2>
           My <span>Work</span>
         </h2>
-        <div className="work-flex">
-          {[...Array(6)].map((_value, index) => (
-            <div className="work-box" key={index}>
-              <div className="work-info">
-                <div className="work-title">
-                  <h3>0{index + 1}</h3>
+        
+        <div className="project-navigation">
+          <button 
+            className="nav-btn prev-btn" 
+            onClick={prevProject}
+            disabled={currentProject === 0}
+          >
+            Previous
+          </button>
+          
+          <div className="project-indicators">
+            {Array.from({ length: Math.ceil(projects.length / 2) }).map((_, index) => (
+              <button
+                key={index}
+                className={`indicator ${index === Math.floor(currentProject / 2) ? 'active' : ''}`}
+                onClick={() => setCurrentProject(index * 2)}
+              />
+            ))}
+          </div>
+          
+          <button 
+            className="nav-btn next-btn" 
+            onClick={nextProject}
+            disabled={currentProject >= projects.length - 2}
+          >
+            Next
+          </button>
+        </div>
 
-                  <div>
-                    <h4>Project Name</h4>
-                    <p>Category</p>
+        <div className="work-slider">
+          <div className="work-flex" style={{ transform: `translateX(-${currentProject * 370}px)` }}>
+            {projects.map((project) => (
+              <div 
+                key={project.id}
+                className={`work-box ${project.id >= currentProject + 1 && project.id <= currentProject + 2 ? 'active' : ''}`}
+              >
+                <div className="work-info">
+                  <div className="work-title">
+                    <h3>0{project.id}</h3>
+                    <div>
+                      <h4>{project.title}</h4>
+                      <p>{project.category}</p>
+                    </div>
                   </div>
+                  <h4>Tools and features</h4>
+                  <p>{project.tools}</p>
+                  <a 
+                    href={project.link}
+                    target="_blank"
+                    className="project-link"
+                    rel="noopener noreferrer"
+                  >
+                    View Project
+                  </a>
                 </div>
-                <h4>Tools and features</h4>
-                <p>Javascript, TypeScript, React, Threejs</p>
+                <WorkImage image={project.image} alt={project.title} />
               </div>
-              <WorkImage image="/images/placeholder.webp" alt="" />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

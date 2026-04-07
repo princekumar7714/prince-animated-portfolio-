@@ -27,8 +27,36 @@
   margin-bottom: 20px;
 }
 a.contact-social {
-  font-size: 25px;
-  border-bottom: 1px solid #ccc;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+.contact-social:hover {
+  color: var(--accentColor);
+  transform: translateX(5px);
+}
+.contact-resume {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accentColor);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 2px solid var(--accentColor);
+}
+.contact-resume:hover {
+  background: transparent;
+  color: var(--accentColor);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(196, 129, 255, 0.3);
 }
 .contact-box h2 {
   font-weight: 400;

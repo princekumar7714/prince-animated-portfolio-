@@ -208,9 +208,10 @@
   line-height: 40px;
   position: relative;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   text-transform: uppercase;
   letter-spacing: 2px;
+  gap: 10px;
 }
 .landing-h2-info-1 {
   position: absolute;
